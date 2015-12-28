@@ -11,15 +11,13 @@ function sample_ts(now){
     return tsdata;
 }
 
-function plot_ts(targetId){
+function plot_ts(data, targetId){
     var margin = { top: 10, bottom: 50, right: 10, left: 50 };
-
-    var now = new Date().getTime();
-    var data = sample_ts(now);
-    
+ 
     var elm = document.getElementById(targetId);
     var width = elm.offsetWidth - margin.left - margin.right;
     var height = elm.offsetHeight - margin.top - margin.bottom;
+    var now = new Date().getTime();
 
     var x = d3.time.scale()
 	.range([0, width]);
@@ -40,8 +38,10 @@ function plot_ts(targetId){
 	.x(function(d) { return x(d.timestamp) })
 	.y(function(d) { return y(d.value) });
 
+    d3.select(elm).selectAll("*").remove();
     var svg = d3.select(elm)
 	.append("svg")
+    	.attr("class", "plot")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom)
 	.append("g")
@@ -56,8 +56,6 @@ function plot_ts(targetId){
 	.attr("class", "y axis")
 	.call(yaxis);
 
-    console.log("data", data);
-    
     svg.append("path")
 	.datum(data)
 	.attr("class", "line")

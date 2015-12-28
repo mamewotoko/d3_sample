@@ -3,6 +3,7 @@
    <meta charset="utf-8" />
    <meta name="Author" content="Takashi Masuyama" />
    <meta name="viewport" content="width=device-width" />
+   <script src="../js/lib/jquery-2.1.4.min.js"></script>
    <script src="../js/lib/d3.min.js"></script>
    <script src="js/plot.js"></script>
    <style>
@@ -24,6 +25,15 @@
 
   <div id="chart"></div>
   <script>
-plot_ts("chart");
+    var data = sample_ts(now);
+    var now = new Date().getTime();
+    var data = sample_ts(now);
+
+    $(function(){
+    setInterval(function() {
+    plot_ts(data, "chart");
+    }, 2000);
+    })
+
     </script>
 </body></html>
