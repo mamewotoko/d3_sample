@@ -41,6 +41,8 @@ function plot_ts(data, targetId){
     var markdata = data.filter(function(d){ if("mark" in d) { return d.mark }  return false; });
     console.log("markdata", markdata);
     console.log("data", data);
+
+    var circle_r = 3;
     
     var first = markdata[0];
     var last = markdata[2];
@@ -52,7 +54,6 @@ function plot_ts(data, targetId){
     var center_y = (first_y+last_y)/2;
     var long_r = Math.sqrt((first_x-last_x)*(first_x-last_x)+(first_y-last_y)*(first_y-last_y))/2;
     var short_r = 5;
-
   
     var theta = Math.asin((last_y-center_y)/long_r);
     var deg = 90*theta/(Math.PI/2);
@@ -86,7 +87,7 @@ function plot_ts(data, targetId){
         .append("svg:circle")
 	.attr("cx", function(d) {return x(d.timestamp);})
 	.attr("cy", function(d) {return y(d.value);})
-	.attr("r", 3)
+	.attr("r", circle_r)
 	.attr("fill", "#000")
 	.append("svg:title")
 	.text(function(d) { return d.ts_delta +" "+d.value + " " + d.mark; });
@@ -95,7 +96,7 @@ function plot_ts(data, targetId){
     	.attr("transform", "translate("+center_x+","+center_y+") rotate("+deg+")")
     	//.attr("cx", center_x)
     	//.attr("cy", center_y)
-    	.attr("rx", long_r)
+    	.attr("rx", long_r+2*circle_r)
     	.attr("ry", short_r)
     	.style("fill", "none")
     	.style("stroke", "red")
