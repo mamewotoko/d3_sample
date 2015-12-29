@@ -38,6 +38,25 @@ function plot_ts(data, targetId){
 	.x(function(d) { return x(d.timestamp) })
 	.y(function(d) { return y(d.value) });
 
+    var markdata = data.filter(function(d){ if("mark" in d) { return d.mark }  return false; });
+    console.log("markdata", markdata);
+    console.log("data", data);
+    
+    var first = markdata[0];
+    var last = markdata[2];
+    var first_x = x(first.timestamp);
+    var first_y = y(first.value);
+    var last_x = x(last.timestamp);
+    var last_y = y(last.value);
+    var center_x = (first_x+last_x)/2;
+    var center_y = (first_y+last_y)/2;
+    var long_r = Math.sqrt((first_x-last_x)*(first_x-last_x)+(first_y-last_y)*(first_y-last_y))/2;
+    var short_r = 5;
+
+  
+    var theta = Math.asin((last_y-center_y)/long_r);
+    var deg = 90*theta/(Math.PI/2);
+    
     d3.select(elm).selectAll("*").remove();
     var svg = d3.select(elm)
 	.append("svg")
@@ -60,4 +79,23 @@ function plot_ts(data, targetId){
 	.datum(data)
 	.attr("class", "line")
 	.attr("d", line);
+    svg.selectAll("circle")
+	.data(data)
+	.enter()
+        .append("svg:circle")
+	.attr("cx", function(d) {return x(d.timestamp);})
+	.attr("cy", function(d) {return y(d.value);})
+	.attr("r", 3)
+	.attr("fill", "#000")
+	.append("svg:title")
+	.text(function(d) { return d.ts_delta +" "+d.value; });
+
+    svg.append("ellipse")
+    	.attr("cx", center_x)
+    	.attr("cy", center_y)
+    	.attr("rx", long_r)
+    	.attr("ry", short_r)
+    	.style("fill", "none")
+    	.style("stroke", "red")
+    	.style("stroke-width", "2px");
 }
