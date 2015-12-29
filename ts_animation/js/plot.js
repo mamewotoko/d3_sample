@@ -56,6 +56,7 @@ function plot_ts(data, targetId){
   
     var theta = Math.asin((last_y-center_y)/long_r);
     var deg = 90*theta/(Math.PI/2);
+    console.log("theta, deg", theta, deg);
     
     d3.select(elm).selectAll("*").remove();
     var svg = d3.select(elm)
@@ -88,11 +89,12 @@ function plot_ts(data, targetId){
 	.attr("r", 3)
 	.attr("fill", "#000")
 	.append("svg:title")
-	.text(function(d) { return d.ts_delta +" "+d.value; });
+	.text(function(d) { return d.ts_delta +" "+d.value + " " + d.mark; });
 
     svg.append("ellipse")
-    	.attr("cx", center_x)
-    	.attr("cy", center_y)
+    	.attr("transform", "translate("+center_x+","+center_y+") rotate("+deg+")")
+    	//.attr("cx", center_x)
+    	//.attr("cy", center_y)
     	.attr("rx", long_r)
     	.attr("ry", short_r)
     	.style("fill", "none")
