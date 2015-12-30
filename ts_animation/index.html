@@ -22,9 +22,15 @@
    <title>Chart</title>
 </head>
 <body>
-
+  <label><input type="checkbox">Animate</input></label>
   <div id="chart"></div>
   <script>
+    var animate = false;
+    
+    var h = location.hash;
+    if(h != null && h != ""){
+        animate = (h == "#animate");
+    }
     var start = new Date().getTime();
     var data = sample_ts(start);
     var peek_count = 0;
@@ -38,9 +44,8 @@
          data[i].mark = false;
        }
     }
-var ANIMATION = false;
 
-      if(ANIMATION){
+      if(animate){
 
     $(function(){
       setInterval(function() {
