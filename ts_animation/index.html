@@ -24,49 +24,5 @@
 <body>
   <label><input type="checkbox">Animate</input></label>
   <div id="chart"></div>
-  <script>
-    var animate = false;
-    
-    var h = location.hash;
-    if(h != null && h != ""){
-        animate = (h == "#animate");
-    }
-    var start = new Date().getTime();
-    var data = sample_ts(start);
-    var peek_count = 0;
-    for(var i = 0; i < data.length; i++){
-		       //if(data[i].value >= 1){
-     if(data[i].value > 0.8){
-         data[i].mark = true;
-      console.log("marked", data[i]);
-      }
-       else {
-         data[i].mark = false;
-       }
-    }
-
-      if(animate){
-
-    $(function(){
-      setInterval(function() {
-      var now = new Date().getTime();
-      
-      var peek_count = 0;
-      var value = Math.cos((now-start)*Math.PI/30);
-      var mark = false;
-      if(value > 0.8){
-	mark = true;
-	}
-      var row = {timestamp: now, value: value, mark: mark };
-	data.push(row);
-	plot_ts(data, "chart");
-	}, 2000);
-	})
-      }
-      else {
-      plot_ts(data, "chart");
-      }
-
-
-    </script>
+  <script src="js/main.js"></script>
 </body></html>
