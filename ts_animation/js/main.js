@@ -41,11 +41,13 @@ if(animate){
 	    //var value = Math.cos((now-start)*Math.PI/30);
 	    var value = Math.sin(i*Math.PI/20);
 	    i++;
-	    var mark = false;
-	    if(value > 0.8){
-		mark = true;
+	    var row = {timestamp: now, value: value, mark: false, image: false };
+	    if(row.value > 0.8){
+		row.mark = true;
 	    }
-	    var row = {timestamp: now, value: value, mark: mark };
+	    else if(Math.abs(row.value) < 0.01){
+		row.image = true;
+	    }
 	    data.push(row);
 	    plot_ts(data, "chart");
 	}, 2000);

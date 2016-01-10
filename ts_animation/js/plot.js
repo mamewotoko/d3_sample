@@ -1,15 +1,5 @@
 var TIME_WIDTH = 180*1000;
-
-function sample_ts(now){
-    var tsdata = [];
-    for(var i = 0; i < TIME_WIDTH/1000; i++){
-	var timestamp = (now-TIME_WIDTH) + i*1000;
-	var value = Math.sin(i*Math.PI/20);
-	tsdata.push({ timestamp: timestamp, value: value, ts_delta: now-timestamp });
-    }
-    //return { name: "tsdata", values: tsdata };
-    return tsdata;
-}
+var IMAGE_PATH = "image/Ghostscript_Tiger.svg";
 
 function plot_ts(data, targetId){
     var margin = { top: 10, bottom: 50, right: 10, left: 50 };
@@ -39,9 +29,6 @@ function plot_ts(data, targetId){
 	.y(function(d) { return y(d.value) });
 
     var markdata = data.filter(function(d){ if("mark" in d) { return d.mark }  return false; });
-    console.log("markdata", markdata);
-    console.log("data", data);
-
     var circle_r = 3;
     
     var first = markdata[0];
@@ -81,6 +68,7 @@ function plot_ts(data, targetId){
 	.datum(data)
 	.attr("class", "line")
 	.attr("d", line);
+    
     svg.selectAll("circle")
 	.data(data)
 	.enter()
@@ -92,10 +80,23 @@ function plot_ts(data, targetId){
 	.append("svg:title")
 	.text(function(d) { return d.ts_delta +" "+d.value + " " + d.mark; });
 
+    var imagedata = data.filter(function(d){ if("image" in d) { return d.image } return false; });
+    //svg.selectAll(
+    var image_width = 30;
+    var image_height = 30;
+   
+    svg.selectAll("image")
+	.data(imagedata)
+	.enter()
+	.append("svg:image")
+	.attr("xlink:href", IMAGE_PATH)
+	.attr("x", function(d) { return x(d.timestamp)-image_width/2; })
+	.attr("y", function(d) { return y(d.value)-image_height/2; })
+	.attr("width", "30")
+	.attr("height", "30");
+    
     svg.append("ellipse")
     	.attr("transform", "translate("+center_x+","+center_y+") rotate("+deg+")")
-    	//.attr("cx", center_x)
-    	//.attr("cy", center_y)
     	.attr("rx", long_r+2*circle_r)
     	.attr("ry", short_r)
     	.style("fill", "none")
