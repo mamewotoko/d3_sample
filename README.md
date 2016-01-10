@@ -11,7 +11,6 @@ Contents
 
 TODO
 ----
-* add rectagle mark
 * Smooth animation
 
 ----

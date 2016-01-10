@@ -79,6 +79,15 @@ function plot_ts(data, targetId){
 	.attr("width", rect_width)
 	.attr("height", rect_height)
 	.style("fill", "pink");
+
+    svg.selectAll(".bgtext")
+	.data(rectdata)
+	.enter()
+	.append("svg:text")
+	.attr("class", "bgtext")
+	.attr("x", function(d) { return x(d.timestamp); })
+	.attr("y", 10)
+	.text("start");
     
     svg.append("path")
 	.datum(data)
