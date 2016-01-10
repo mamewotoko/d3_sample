@@ -22,6 +22,7 @@ var i = 0;
 for(; i < data.length; i++){
     data[i].mark = false;
     data[i].image = false;
+    data[i].rect = false;
     
     if(data[i].value > 0.8){
         data[i].mark = true;
@@ -29,7 +30,11 @@ for(; i < data.length; i++){
     else if(Math.abs(data[i].value) < 0.01){
 	data[i].image = true;
     }
+    if(Math.abs(Math.abs(data[i].value)-1) < 0.01){
+	data[i].rect = true;
+    }
 }
+console.log("data", data);
 
 if(animate){
 
@@ -41,12 +46,19 @@ if(animate){
 	    //var value = Math.cos((now-start)*Math.PI/30);
 	    var value = Math.sin(i*Math.PI/20);
 	    i++;
-	    var row = {timestamp: now, value: value, mark: false, image: false };
+	    var row = {timestamp: now,
+		       value: value,
+		       mark: false,
+		       image: false,
+		       rect: false };
 	    if(row.value > 0.8){
 		row.mark = true;
 	    }
 	    else if(Math.abs(row.value) < 0.01){
 		row.image = true;
+	    }
+	    if(Math.abs(Math.abs(row.value)-1) < 0.01){
+		row.rect = true;
 	    }
 	    data.push(row);
 	    plot_ts(data, "chart");

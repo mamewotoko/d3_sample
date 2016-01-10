@@ -47,6 +47,7 @@ function plot_ts(data, targetId){
     console.log("theta, deg", theta, deg);
     
     d3.select(elm).selectAll("*").remove();
+    
     var svg = d3.select(elm)
 	.append("svg")
     	.attr("class", "plot")
@@ -64,24 +65,38 @@ function plot_ts(data, targetId){
 	.attr("class", "y axis")
 	.call(yaxis);
 
+    var rect_width = 10;
+    var rect_height = height;   
+
+    var rectdata = data.filter(function(d){ if("rect" in d) { return d.rect } return false; });
+    svg.selectAll(".bgrect")
+	.data(rectdata)
+	.enter()
+	.append("svg:rect")
+    	.attr("class", "bgrect")
+	.attr("x", function(d) { return x(d.timestamp); })
+	.attr("y", 0)
+	.attr("width", rect_width)
+	.attr("height", rect_height)
+	.style("fill", "pink");
+    
     svg.append("path")
 	.datum(data)
 	.attr("class", "line")
 	.attr("d", line);
     
-    svg.selectAll("circle")
-	.data(data)
-	.enter()
-        .append("svg:circle")
-	.attr("cx", function(d) {return x(d.timestamp);})
-	.attr("cy", function(d) {return y(d.value);})
-	.attr("r", circle_r)
-	.attr("fill", "#000")
-	.append("svg:title")
-	.text(function(d) { return d.ts_delta +" "+d.value + " " + d.mark; });
+    // svg.selectAll("circle")
+    // 	.data(data)
+    // 	.enter()
+    //     .append("svg:circle")
+    // 	.attr("cx", function(d) {return x(d.timestamp);})
+    // 	.attr("cy", function(d) {return y(d.value);})
+    // 	.attr("r", circle_r)
+    // 	.attr("fill", "#000")
+    // 	.append("svg:title")
+    // 	.text(function(d) { return d.ts_delta +" "+d.value + " " + d.mark; });
 
     var imagedata = data.filter(function(d){ if("image" in d) { return d.image } return false; });
-    //svg.selectAll(
     var image_width = 30;
     var image_height = 30;
    
@@ -94,7 +109,7 @@ function plot_ts(data, targetId){
 	.attr("y", function(d) { return y(d.value)-image_height/2; })
 	.attr("width", "30")
 	.attr("height", "30");
-    
+
     svg.append("ellipse")
     	.attr("transform", "translate("+center_x+","+center_y+") rotate("+deg+")")
     	.attr("rx", long_r+2*circle_r)
