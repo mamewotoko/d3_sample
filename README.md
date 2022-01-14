@@ -4,8 +4,8 @@ d3_sample
 Contents
 --------
 * Timeseries animation ![ts animation screenshot](img/ts_animation.png)
-    * Static: ts_animation/index.html [demo on rawgit](https://rawgit.com/mamewotoko/d3_sample/master/ts_animation/index.html)
-    * Animation by redraw ts_animation/index.html#animate [demo on rawgit](https://rawgit.com/mamewotoko/d3_sample/master/ts_animation/index.html#animate)
+    * Static: ts_animation/index.html [demo](https://mamewotoko.github.io/d3_sample/ts_animation/)
+    * Animation by redraw ts_animation/index.html#animate [demo](https://mamewotoko.github.io/d3_sample/ts_animation_transition)
     * Animation by transition (not yet)
 
 Detail
