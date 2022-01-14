@@ -13,12 +13,18 @@ Detail
 * mark multiple points by ellipse
 * mark by image
 * range mark by rectangle
-    * draw rectangle before drawing path 
+    * draw rectangle before drawing path
 
 TODO
 ----
 * Smooth animation (animation by transition)
-* Multiple graph 
+* Multiple graph
+
+
+Third-party libraries
+----------------------
+* clf-parser <https://www.npmjs.com/package/clf-parser>
+  * `plot_log/js/clf-parser/`
 
 ----
 Takashi Masuyama < mamewotoko@gmail.com >
